@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "serve": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "express": "^4.16.1",
     "webpack": "^3.6.0"
   }
 }
