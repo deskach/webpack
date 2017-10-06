@@ -7,10 +7,11 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: "bundle.js",
+        publicPath: "build/",
     },
     module: {
         rules: [
-            {
+            {   // npm i --save-dev babel-loader babel-core babel-preset-env
                 use: 'babel-loader',
                 test: /\.js$/,
             },
@@ -19,7 +20,7 @@ const config = {
             //     use: ['style-loader', 'css-loader'],
             //     test: /\.css$/,
             // },
-            {
+            {   // npm i --save-dev css-loader style-loader extract-text-webpack-plugin
                 // this generates standalone css file,
                 // rather than injecting css into the DOM
                 use: ExtractTextPlugin.extract({
@@ -27,6 +28,16 @@ const config = {
                     use: "css-loader"
                 }),
                 test: /\.css$/,
+            },
+            {   // npm i --save-dev image-webpack-loader url-loader file-loader
+                test: /\.(jpe?g|png|gif|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {limit: 4000}, // put larege images in separate files
+                    },
+                    'image-webpack-loader',
+                ]
             },
         ]
     },
