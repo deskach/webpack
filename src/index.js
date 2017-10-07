@@ -1,12 +1,22 @@
-const button = document.createElement('button');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {applyMiddleware, createStore} from 'redux';
+import {Provider} from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import reducers from './reducers';
+import Routes from './router';
+import '../style/materialize.css';
+import '../style/react-range.css';
+import '../style/style.css';
 
-button.innerText = 'Click me';
-button.onclick = () => {
-    // System.import allows for web-pack code-splitting
-    System.import('./image_viewer')
-        .then(module => {
-            module.default();
-        });
+const App = () => {
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
+    return (
+        <Provider store={store}>
+            <Routes/>
+        </Provider>
+    );
 };
 
-document.body.appendChild(button);
+ReactDOM.render(<App/>, document.getElementById('root'));
