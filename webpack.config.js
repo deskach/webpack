@@ -22,7 +22,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: '[name].js',
+        filename: '[name].[chunkhash].js',
         // ^ this creates 2 bundles - bundle.js & vendor.js;
         // name is key of the entry section.
     },
@@ -41,7 +41,7 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
+            names: ['vendor', 'manifest']
         }),
         // ^this makes sure that vendor.js and bundle.js do not intersect
         new HtmlWebpackPlugin({
