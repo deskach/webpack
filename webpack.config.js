@@ -48,5 +48,10 @@ module.exports = {
             template: 'src/index.html',
         }),
         // ^this auto-generates index.js in dist folder and inserts js-scripts into it
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        }),
+        // ^this defines a window-scope variable available for the spa.
+        // Initial value in this case comes from package.json 'build' script
     ]
 };
