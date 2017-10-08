@@ -5,11 +5,10 @@
     "main": "index.js",
     "scripts": {
         "deploy": "npm run build && npm run surge",
-        "build": "npm run prod && npm run clean && webpack -p",
-        "surge": "node ./node_modules/surge/lib/cli.js -p dist -d deskach.surge.sh",
-        "prod": "node ./node_modules/cross-env/dist/index.js NODE_ENV=production",
-        "clean": "node ./node_modules/rimraf/bin.js dist",
-        "serve": "webpack-dev-server"
+        "surge": "surge -p dist -d deskach.surge.sh",
+        "build": "npm run clean && env-cmd ./.prod.env webpack -p",
+        "webpack": "env-cmd ./.dev.env webpack-dev-server",
+        "clean": "rimraf dist"
     },
     "repository": "https://github.com/deskach/webpack.git",
     "author": "",
@@ -31,8 +30,8 @@
         "babel-loader": "^7.1.2",
         "babel-preset-env": "^1.6.0",
         "babel-preset-react": "^6.24.1",
-        "cross-env": "^5.0.5",
         "css-loader": "^0.28.7",
+        "env-cmd": "^7.0.0",
         "html-webpack-plugin": "^2.30.1",
         "rimraf": "^2.6.2",
         "style-loader": "^0.19.0",
