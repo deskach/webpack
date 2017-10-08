@@ -4,12 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "deploy": "npm run build && npm run surge",
         "build": "npm run prod && npm run clean && webpack -p",
+        "surge": "node ./node_modules/surge/lib/cli.js -p dist -d deskach.surge.sh",
         "prod": "node ./node_modules/cross-env/dist/index.js NODE_ENV=production",
-        "serve": "webpack-dev-server",
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "serve": "webpack-dev-server"
     },
-    "repository": "https://github.com/StephenGrider/WebpackProject",
+    "repository": "https://github.com/deskach/webpack.git",
     "author": "",
     "license": "ISC",
     "dependencies": {
@@ -33,6 +35,7 @@
         "css-loader": "^0.28.7",
         "html-webpack-plugin": "^2.30.1",
         "style-loader": "^0.19.0",
+        "surge": "^0.19.0",
         "webpack": "^3.6.0",
         "webpack-dev-server": "^2.9.1"
     }
