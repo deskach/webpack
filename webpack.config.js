@@ -3,16 +3,18 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
-    "faker",
+    "jquery",
+    "bootstrap",
+    "axios",
     "lodash",
     "react",
     "react-dom",
-    "react-input-range",
     "react-redux",
     "react-router",
+    "react-router-dom",
     "redux",
     "redux-form",
-    "redux-thunk",
+    "redux-promise",
 ];
 
 module.exports = {
@@ -29,13 +31,37 @@ module.exports = {
     module: {
         rules: [
             {
-                use: 'babel-loader',
                 test: /\.js$/,
+                use: 'babel-loader',
                 exclude: /node_modules/,
             },
             {
-                use: ['style-loader', 'css-loader'],
                 test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                use: 'url-loader?limit=100000'
+            },
+            {
+                test: /\.(scss)$/,
+                use: [{
+                    loader: 'style-loader', // inject CSS to page
+                }, {
+                    loader: 'css-loader', // translates CSS into CommonJS modules
+                }, {
+                    loader: 'postcss-loader', // Run post css actions
+                    options: {
+                        plugins: function () { // post css plugins, can be exported to postcss.config.js
+                            return [
+                                require('precss'),
+                                require('autoprefixer')
+                            ];
+                        }
+                    }
+                }, {
+                    loader: 'sass-loader' // compiles SASS to CSS
+                }]
             },
         ]
     },
@@ -53,5 +79,14 @@ module.exports = {
         }),
         // ^this defines a window-scope variable available for the spa.
         // Initial value in this case comes from package.json 'build' script
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            Popper: ['popper.js', 'default'],
+            // In case you imported plugins individually, you must also require them here:
+            Util: "exports-loader?Util!bootstrap/js/dist/util",
+            Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+        })
     ]
 };

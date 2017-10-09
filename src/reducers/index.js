@@ -1,14 +1,11 @@
 import {combineReducers} from 'redux';
+import PostsReducer from './reducer_posts';
 import {reducer as formReducer} from 'redux-form';
-import filterCriteriaReducer from './FilterCriteriaReducer';
-import ArtistsReducer from './ArtistsReducer';
-import ErrorReducer from './ErrorReducer';
-import SelectionReducer from './SelectionReducer';
 
-export default combineReducers({
+
+const rootReducer = combineReducers({
+    posts: PostsReducer,
     form: formReducer,
-    filterCriteria: filterCriteriaReducer,
-    artists: ArtistsReducer,
-    errors: ErrorReducer,
-    selection: SelectionReducer
 });
+
+export default rootReducer;
